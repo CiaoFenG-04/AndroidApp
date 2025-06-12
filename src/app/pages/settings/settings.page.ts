@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { BaseLayoutComponent } from 'src/app/base-layout/base-layout.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { AlertController, NavController, ToastController } from '@ionic/angular';
@@ -14,7 +13,6 @@ import { AuthService } from 'src/app/service/auth.service';
   imports: [
     IonicModule,
     FormsModule,
-    BaseLayoutComponent
   ]
 })
 export class SettingsPage{
@@ -90,6 +88,11 @@ export class SettingsPage{
         });
         await toast.present();
       }
+    }
+
+    editProfile() {
+      
+      this.navCtrl.navigateForward('/profile');
     }
 
 }

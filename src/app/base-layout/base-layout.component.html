@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-avatar class="custom-avatar" (click)="openMenu()">
-        <img src="assets/img/avatar.jpg" />
+        <img [src]="avatarUrl || 'assets/img/avatar.jpg'" />
       </ion-avatar>
     </ion-buttons>
   </ion-toolbar>

@@ -60,6 +60,7 @@ export class RegisterPage {
     this.authService.register(payload).subscribe({
       next: (res) => {
         alert('Đăng ký tài khoản thành công!');
+        localStorage.setItem('user_email', this.email)
         this.router.navigate(['/login']);
       },
       error: (err: HttpErrorResponse) => {

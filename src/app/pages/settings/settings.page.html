@@ -1,11 +1,21 @@
-<app-base-layout></app-base-layout>
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Cài đặt</ion-title>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content [fullscreen]="true" class="settings-content">
 
   <ion-list lines="full">
     <ion-item>
       <ion-label>Thông tin cá nhân</ion-label>
-      <ion-icon name="person-outline" slot="end"></ion-icon>
+      <ion-button slot="end" fill="clear" color="primary" (click)="editProfile()">
+        Chỉnh sửa
+      </ion-button>
     </ion-item>
 
     <ion-item>

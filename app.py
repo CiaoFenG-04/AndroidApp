@@ -58,6 +58,7 @@ def login():
     else:
         return jsonify({"message": "Tài khoản hoặc mật khẩu không hợp lệ"}), 401
 
+# Xóa account
 @app.route('/user/delete', methods=['DELETE'])
 def delete_account():
     auth_header = request.headers.get('Authorization')
