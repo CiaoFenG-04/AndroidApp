@@ -27,7 +27,7 @@ export class Tab2Page implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.token = this.authService.getToken();
+    this.token = this.authService.getAccessToken();
     console.log('Token:', this.token);
   }
 

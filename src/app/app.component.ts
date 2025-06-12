@@ -83,7 +83,6 @@ export class AppComponent implements OnInit {
     console.log('Cập nhật Menu Bar:', this.isLoggedIn);
     this.appPages = this.isLoggedIn
       ? [
-          { title: 'Hồ sơ', url: 'profile', icon: 'person' },
           { title: 'Cài đặt', url: 'settings', icon: 'settings' },
           { title: 'Đăng xuất', url: '', icon: 'log-out', action: 'logout' },
         ]

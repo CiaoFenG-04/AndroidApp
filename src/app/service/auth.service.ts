@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, tap } from 'rxjs';
 
 @Injectable({
@@ -59,13 +59,10 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}token`, body.toString(), { headers }).pipe(
       tap((response: any) => {
         if (response && response.access_token) {
-          // ✅ Chỉ lưu vào localStorage khi đăng nhập thành công
           localStorage.setItem('loggedIn', 'true');
           localStorage.setItem('username', credentials.username);
           localStorage.setItem('access_token', response.access_token);
 
-          
-          console.log('')
           this.loggedIn.next(true);
           this.username.next(credentials.username);
         }
@@ -74,7 +71,6 @@ export class AuthService {
   }
 
   logout(): void {
-    // ✅ Xóa sạch localStorage khi đăng xuất
     localStorage.removeItem('loggedIn');
     localStorage.removeItem('username');
     localStorage.removeItem('access_token');
@@ -83,10 +79,17 @@ export class AuthService {
     this.username.next(null);
   }
 
-  getToken(): string | null {
+  getAccessToken(): string | null {
     return localStorage.getItem('access_token');
   }
 
+  getAuthHeaders(): HttpHeaders {
+    const token = this.getAccessToken();
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Accept': 'application/json'
+    });
+  }
 
   setLoginStatus(status: boolean): void {
     this.loggedIn.next(status);
