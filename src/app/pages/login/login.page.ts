@@ -1,18 +1,17 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth.service';
+import { AuthService } from 'src/app/service/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
-const user_login = true;
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
@@ -25,7 +24,6 @@ export class LoginPage {
   password: string = '';
   loginError: string = '';
   submitted = false;
-  loginPassword: string = '';
 
   constructor(
     private router: Router,
@@ -36,29 +34,37 @@ export class LoginPage {
     this.submitted = true;
     this.loginError = '';
 
-    if (!this.username || !this.loginPassword) {
+    if (!this.username || !this.password) {
       this.loginError = 'Vui lòng nhập đầy đủ tài khoản và mật khẩu.';
       return;
     }
 
     const loginData = {
       username: this.username,
-      password: this.loginPassword
+      password: this.password
     };
 
     this.authService.login(loginData).subscribe({
       next: (res: any) => {
-        alert('Đăng nhập thành công!');
-        this.authService.setLoginStatus(true);
-        this.authService.setUsername(this.username);
-        this.router.navigate(['/tabs']);
+        // ✅ Kiểm tra token
+        if (res.access_token) {
+          alert('Đăng nhập thành công!');
+
+          // ✅ Lưu trạng thái login
+          this.authService.setLoginStatus(true);
+          this.authService.setUsername(this.username);
+
+          // ✅ Điều hướng
+          this.router.navigate(['/tabs']);
+        } else {
+          this.loginError = 'Đăng nhập không thành công.';
+        }
       },
       error: (error: HttpErrorResponse) => {
         console.error('Login failed:', error);
-        this.loginError = error.error?.message || 'Tài khoản hoặc mật khẩu không đúng!';
+        this.loginError = error.error?.detail || 'Tài khoản hoặc mật khẩu không đúng!';
         alert(this.loginError);
       }
     });
   }
-
 }

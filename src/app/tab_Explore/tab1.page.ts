@@ -3,6 +3,7 @@ import { TabLabels } from '../tab-labels'; // đường dẫn có thể là './t
 import { BaseLayoutComponent } from '../base-layout/base-layout.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',

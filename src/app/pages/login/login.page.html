@@ -12,9 +12,9 @@
 
       <!-- Mật khẩu -->
       <div class="input-control">
-        <label for="loginPassword">Mật khẩu</label>
-        <input id="loginPassword" name="loginPassword" type="password" [(ngModel)]="loginPassword" required />
-        <div class="error" *ngIf="submitted && loginPassword !== password">Mật khẩu không đúng</div>
+        <label for="password">Mật khẩu</label>
+        <input id="password" name="password" type="password" [(ngModel)]="password" required />
+        <div class="error" *ngIf="submitted && !password">Mật khẩu không được để trống</div>
       </div>
 
       <!-- Nút Đăng nhập -->
