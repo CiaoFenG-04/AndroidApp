@@ -23,6 +23,7 @@ export class RegisterPage {
 
   constructor(private authService: AuthService, private router: Router) {}
 
+  // Nút đăng ký
   onSubmit() {
     this.submitted = true;
     this.registerError = '';
@@ -57,6 +58,7 @@ export class RegisterPage {
       password: this.password
     };
 
+    //Lấy hành động từ authService
     this.authService.register(payload).subscribe({
       next: (res) => {
         alert('Đăng ký tài khoản thành công!');

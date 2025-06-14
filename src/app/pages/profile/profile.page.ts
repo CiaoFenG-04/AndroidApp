@@ -16,16 +16,18 @@ import { AuthService } from 'src/app/service/auth.service';
     CommonModule
   ]
 })
+
+//Xử lý logic bằng implements OnInit
 export class ProfilePage implements OnInit {
   isEditing = false;
 
   user = {
     username: '',
     id: '',
-    phone: '',
     email: '',
     avatar: '',
     displayName: '',
+
   };
 
   avatarPreview: string | ArrayBuffer | null = null;
@@ -33,22 +35,23 @@ export class ProfilePage implements OnInit {
 
   @ViewChild('fileInput', { static: false }) fileInput!: ElementRef;
 
+  //Xử lý dữ liệu bên service
   constructor(private authService: AuthService, private http: HttpClient) {}
 
   ngOnInit() {
     this.fetchUserInfo();
   }
 
+  // Lấy dữ liệu người dùng từ server fecthUserInfo()
   fetchUserInfo() {
     const headers = this.authService.getAuthHeaders();
-    this.http.get<any>('https://mymaps-app.onrender.com/users/me', { headers }).subscribe({
+    this.http.get<any>('https://mymaps-app.onrender.com/users/me', { headers }).subscribe({ //lấy dữ liệu <get> từ users/me -> kết quả trả về -> lấy kết quả đó
       next: (res) => {
         // Gán dữ liệu trả về
         this.user.id = res.user_id;
         this.user.username = res.username;
         this.user.displayName = res.username;
         this.user.email = res.user_email || '';
-        this.user.phone = res.user_phone || '';
         this.user.avatar = res.avatar || '';
 
         this.avatarPreview = this.user.avatar;
@@ -62,7 +65,6 @@ export class ProfilePage implements OnInit {
         localStorage.setItem('userId', this.user.id);
         localStorage.setItem('displayName', this.user.username);
         localStorage.setItem('user_email', this.user.email);
-        localStorage.setItem('user_phone', this.user.phone);
         localStorage.setItem('user_avatar', this.user.avatar);
       },
       error: (err) => {
@@ -70,7 +72,8 @@ export class ProfilePage implements OnInit {
       }
     });
   }
-
+  
+  // Chỉnh sửa thông tin người dùng
   toggleEdit() {
     if (this.isEditing) {
       this.saveProfile();
@@ -78,10 +81,12 @@ export class ProfilePage implements OnInit {
     this.isEditing = !this.isEditing;
   }
 
+  // Chỉnh sửa ảnh
   triggerFileInput() {
     this.fileInput.nativeElement.click();
   }
 
+  //Chọn file
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
@@ -95,12 +100,13 @@ export class ProfilePage implements OnInit {
     }
   }
 
+
+  //Lưu lại thông tin
   saveProfile() {
   const headers = this.authService.getAuthHeaders();
   const updatedData = {
     user_email: this.user.email,
-    user_phone: this.user.phone,
-    avatar: this.user.avatar, // có thể thêm nếu backend hỗ trợ
+    avatar: this.user.avatar,
   };
 
   this.http.put('https://mymaps-app.onrender.com/users/me', updatedData, { headers }).subscribe({
@@ -110,7 +116,6 @@ export class ProfilePage implements OnInit {
 
       // Lưu localStorage
       localStorage.setItem('user_email', this.user.email);
-      localStorage.setItem('user_phone', this.user.phone);
       localStorage.setItem('user_avatar', this.user.avatar);
     },
     error: (err) => {

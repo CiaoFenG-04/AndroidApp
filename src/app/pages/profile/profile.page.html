@@ -54,18 +54,6 @@
       <ion-text>{{ user.id }}</ion-text>
     </ion-item>
 
-    <!-- Số điện thoại -->
-    <ion-item>
-      <ion-label position="stacked">Số điện thoại</ion-label>
-      <ion-input
-        *ngIf="isEditing"
-        [(ngModel)]="user.phone"
-        type="tel"
-        placeholder="Nhập số điện thoại"
-      ></ion-input>
-      <ion-text *ngIf="!isEditing">{{ user.phone || 'Chưa có' }}</ion-text>
-    </ion-item>
-
     <!-- Email -->
     <ion-item>
       <ion-label position="stacked">Email</ion-label>

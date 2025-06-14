@@ -13,7 +13,9 @@ import { AuthService } from './service/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { register } from 'swiper/element/bundle';
 
+register();
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
